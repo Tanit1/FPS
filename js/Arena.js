@@ -17,6 +17,10 @@ const Arena = function(game) {
    materialGround.diffuseTexture.uScale   = 4.0;
    materialGround.diffuseTexture.vScale   = 4.0;
 
+   // Création de matière pour les murs
+   let materialWall = new BABYLON.StandardMaterial('wallTexture', scene);
+   materialWall.diffuseTexture = new BABYLON.Texture('assets/images/wall.jpg', scene);
+
    // Création de la matière pour les objets
    // BOX
    let materialObject                     = new BABYLON.StandardMaterial('objectTexture', scene);
@@ -42,10 +46,15 @@ const Arena = function(game) {
    materialGlass.diffuseTexture.vScale    = 1.0;
 
    // Création du sol ( name, width, depth, subdivision, scene )
-   let ground           = BABYLON.Mesh.CreateGround('ground1', 20, 20, 2, scene)
+   let ground           = BABYLON.Mesh.CreateGround('ground1', 100, 100, 2, scene)
    ground.scaling       = new BABYLON.Vector3(2, 10, 3);
    ground.scaling.z     = 2;
    ground.material      = materialGround;
+
+   // Création des murs
+   let boxArena = BABYLON.Mesh.CreateBox('wall', 100, scene, false, BABYLON.Mesh.BACKSIDE);
+   boxArena.material = materialGround;
+   boxArena.checkCollisions = true;
 
    // Création d'un cube ( name, size, scene, updatable, orientation )
    // Modèle de cube
@@ -84,7 +93,7 @@ const Arena = function(game) {
    sphere3.material     = materialGlass;
 
    // Création d'un cylindre ( name, height, diamTop, diamBottom, tesselation, subdivision, scene, updatable, orientation )
-   let cylinder         = BABYLON.Mesh.CreateCylinder('cyl1', 20, 5, 5, 20, 4, scene);
+   let cylinder         = BABYLON.Mesh.CreateCylinder('cyl1', 60, 5, 5, 20, 4, scene);
    cylinder.position.y  = 20/2;
    cylinder.material    = materiaCylinder;
 };
